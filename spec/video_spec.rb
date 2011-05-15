@@ -27,12 +27,19 @@ describe Video do
       @db.drop_collection "videos"
     end
 
-    it "finds a record" do
+    it "finds a record by its key" do
       Video.collection.save guid: "id", title: "Title"
 
-      record = Video.find("id")
+      record = Video["id"]
       record["guid"].should eq("id")
       record["title"].should eq("Title")
+    end
+
+    it "finds a record by its guid" do
+      oid = Video.collection.save guid: "id"
+
+      record = Video.find(oid.to_s)
+      record["guid"].should eq("id")
     end
 
     it "saves a record" do

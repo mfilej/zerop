@@ -4,8 +4,12 @@ module Persistence
 
   attr_writer :database
 
-  def find(guid)
+  def [](guid)
     collection.find_one guid: guid
+  end
+
+  def find(id)
+    collection.find_one BSON::ObjectId(id)
   end
 
   def save(guid, attrs)
