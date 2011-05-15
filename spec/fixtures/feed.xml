@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" >
+	<channel>
+		<title>Zero Punctuation</title>
+		<link>http://www.escapistmagazine.com/videos/view/zero-punctuation</link>
+		<description><![CDATA[Zero Punctuation is The Escapist's groundbreaking video review series starring Ben "Yahtzee" Croshaw. Every Wednesday Zero Punctuation picks apart the games so you don't have to. Called "hilariously cutting ... first legitimate breakout hit from the gaming community in recent memory" by Boing Boing, see why gamers love it and developers fear it.]]></description>
+		<language>en-us</language>
+		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
+		<item>
+			<title>Castlevania: Symphony of the Night</title>
+                        <link>http://cdn/v/1</link>
+			<guid>http://cdn/v/1</guid>
+			<description><![CDATA[<p>This week, Zero Punctuation reviews one of the often lauded greatest games of all time, Castlevania: Symphony of the Night.</p>]]></description>
+			<pubDate>Wed, 11 May 2011 20:00:00 GMT</pubDate>
+			<dc:creator>Ben "Yahtzee" Croshaw</dc:creator>
+			<category>Zero Punctuation</category>
+		</item>
+		<item>
+			<title>Portal 2</title>
+			<link>http://cdn/v/2</link>
+			<guid>http://cdn/v/2</guid>
+			<description><![CDATA[<p>This week, the Zero Punctuation you've been waiting for. Is Portal 2 better than Portal?</p>]]></description>
+			<pubDate>Wed, 04 May 2011 20:00:00 GMT</pubDate>
+			<dc:creator>Ben "Yahtzee" Croshaw</dc:creator>
+			<category>Zero Punctuation</category>
+		</item>
+		<item>
+			<title>Red Dead Redemption</title>
+			<link>http://cdn/v/3</link>
+			<guid>http://cdn/v/3</guid>
+			<description><![CDATA[<p>This week, Zero Punctuation reviews Red Dead Redemption.</p>
+<p>Be sure to join the <a href="http://www.facebook.com/pages/Zero-Punctuation/7546255825" title="" target="_blank">Zero Punctuation Facebook Fan Page</a>.</p>]]></description>
+			<pubDate>Wed, 09 Jun 2010 20:00:00 GMT</pubDate>
+			<dc:creator>Ben "Yahtzee" Croshaw</dc:creator>
+			<category>Zero Punctuation</category>
+		</item>
+	</channel>
+</rss>
