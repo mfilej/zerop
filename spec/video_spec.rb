@@ -31,15 +31,15 @@ describe Video do
       Video.collection.save guid: "id", title: "Title"
 
       record = Video["id"]
-      record["guid"].should eq("id")
-      record["title"].should eq("Title")
+      record.guid.should eq("id")
+      record.title.should eq("Title")
     end
 
     it "finds a record by its guid" do
       oid = Video.collection.save guid: "id"
 
       record = Video.find(oid.to_s)
-      record["guid"].should eq("id")
+      record.guid.should eq("id")
     end
 
     it "saves a record" do
@@ -54,7 +54,7 @@ describe Video do
       Video.save "id", title: "Vid"
 
       records = Video.all
-      records[0]["title"].should eq("Vid")
+      records[0].title.should eq("Vid")
     end
   end
 end

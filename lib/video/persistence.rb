@@ -1,15 +1,16 @@
 require "mongo"
+require "ostruct"
 
 module Persistence
 
   attr_writer :database
 
   def [](guid)
-    collection.find_one guid: guid
+    OpenStruct.new collection.find_one(guid: guid)
   end
 
   def find(id)
-    collection.find_one BSON::ObjectId(id)
+    OpenStruct.new collection.find_one(BSON::ObjectId(id))
   end
 
   def save(guid, attrs)
@@ -17,7 +18,7 @@ module Persistence
   end
 
   def all
-    collection.find.to_a
+    collection.find.map { |e| OpenStruct.new(e) }
   end
 
   def collection
