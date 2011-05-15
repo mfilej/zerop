@@ -7,7 +7,17 @@ require "zero"
 require "sinatra"
 require "haml"
 
-Video.database = Mongo::Connection.new["videos"]
+if ENV["MONGOHQ_URL"]
+  uri = URI.parse(ENV["MONGOHQ_URL"])
+  $mongo_connection = Mongo::Connection.from_uri(ENV['MONGOHQ_URL'])
+  db = uri.path[1..-1]
+else
+  $mongo_connection = Mongo::Connection.new
+  db = "zero_development"
+end
+
+Video.database = $mongo_connection.db(db)
+
 
 get "/" do
   update_index
