@@ -3,5 +3,6 @@
 %ol#episode-list
   - @videos.each do |video|
     %li
-      %a{ href: %{/e/#{video._id}}}= video.title
+      %a{ href: url(%{/e/#{video._id}})}
+        = video.title
 

@@ -14,7 +14,13 @@ end
 
 get "/e/:id" do |id|
   @video = Video.find(id)
-  @video.title
+  haml :episode
+end
+
+get "/e/:id/v" do |id|
+  url = Video.find(id).url
+  video = Video.new(url)
+  redirect to(video.video_url)
 end
 
 def update_index
