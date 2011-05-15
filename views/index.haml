@@ -1,0 +1,7 @@
+%h1 Zero Punctiation
+
+%ol#episode-list
+  - @videos.each do |video|
+    %li
+      %a{ href: %{/e/#{video._id}}}= video.title
+

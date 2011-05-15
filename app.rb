@@ -9,18 +9,20 @@ Video.database = Mongo::Connection.new["videos"]
 get "/" do
   update_index
   @videos = Video.all
-  @videos.inspect
+  haml :index
+end
+
+get "/e/:id" do |id|
+  @video = Video.find(id)
+  @video.title
 end
 
 def update_index
   feed.videos.each do |key, attrs|
-    next if Video.find(key)
+    next if Video[key]
 
     Video.save(key, attrs)
   end
-end
-
-def init_videos
 end
 
 def feed
