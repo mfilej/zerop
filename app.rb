@@ -9,11 +9,16 @@ Video.database = Mongo::Connection.new["videos"]
 get "/" do
   update_index
   @videos = Video.all
+
+  headers "Cache-Control" => "public, max-age=900"
   haml :index
 end
 
 get "/e/:id" do |id|
   @video = Video.find(id)
+
+  headers "Cache-Control" => "public",
+          "Expires" => "Sun, 17-Jan-2038 19:14:07 GMT"
   haml :episode
 end
 
