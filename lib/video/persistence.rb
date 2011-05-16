@@ -24,7 +24,9 @@ module Persistence
   end
 
   def collection
-    @collection ||= @database["videos"]
+    @collection ||= @database["videos"].tap do |collection|
+      collection.ensure_index(:guid, unique: true)
+    end
   end
 
 end
