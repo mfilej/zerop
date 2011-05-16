@@ -6,11 +6,13 @@ module Persistence
   attr_writer :database
 
   def [](guid)
-    OpenStruct.new collection.find_one(guid: guid)
+    return unless record = collection.find_one(guid: guid)
+    OpenStruct.new(record)
   end
 
   def find(id)
-    OpenStruct.new collection.find_one(BSON::ObjectId(id))
+    return unless record = collection.find_one(BSON::ObjectId(id))
+    OpenStruct.new(record)
   end
 
   def save(guid, attrs)

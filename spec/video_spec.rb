@@ -27,34 +27,53 @@ describe Video do
       @db.drop_collection "videos"
     end
 
-    it "finds a record by its key" do
-      Video.collection.save guid: "id", title: "Title"
+    describe "#[]" do
+      it "finds a record by its key" do
+        Video.collection.save guid: "id", title: "Title"
 
-      record = Video["id"]
-      record.guid.should eq("id")
-      record.title.should eq("Title")
+        record = Video["id"]
+        record.guid.should eq("id")
+        record.title.should eq("Title")
+      end
+
+      it "returns nil for a non-existing record" do
+        record = Video["foo"]
+        record.should be_nil
+      end
     end
 
-    it "finds a record by its guid" do
-      oid = Video.collection.save guid: "id"
+    describe "#find" do
+      it "finds a record by its guid" do
+        oid = Video.collection.save guid: "id"
 
-      record = Video.find(oid.to_s)
-      record.guid.should eq("id")
+        record = Video.find(oid.to_s)
+        record.guid.should eq("id")
+      end
+
+      it "returns nil for a non-existing record" do
+        record = Video.find "4dd02a3f4856105be2000007"
+        record.should be_nil
+      end
     end
 
-    it "saves a record" do
-      Video.save "id", title: "Woo!"
+    describe "#save" do
+      it "saves a record" do
+        Video.save "id", title: "Woo!"
 
-      record = Video.collection.find_one guid: "id"
-      record["guid"].should eq("id")
-      record["title"].should eq("Woo!")
+        record = Video.collection.find_one guid: "id"
+        record["guid"].should eq("id")
+        record["title"].should eq("Woo!")
+      end
     end
 
-    it "returns all records" do
-      Video.save "id", title: "Vid"
+    describe "#all" do
+      it "returns all records" do
+        Video.save "id", title: "Vid"
 
-      records = Video.all
-      records[0].title.should eq("Vid")
+        records = Video.all
+        records[0].title.should eq("Vid")
+      end
     end
+
   end
 end
