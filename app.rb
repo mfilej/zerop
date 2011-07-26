@@ -48,6 +48,7 @@ end
 
 get "/feed.rss" do
   @videos = Video.all.reverse
+  content_type :rss
   haml :feed, format: :xhtml
 end
 
