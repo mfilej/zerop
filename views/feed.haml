@@ -1,0 +1,12 @@
+%rss{ "version" => "2.0", "xmlns:atom" => "http://www.w3.org/2005/Atom" }
+  %channel
+    %title Zero Punctuation
+    %link http://zerop.heroku.com
+    %description Zero Punctuation episodes by Ben Yahtzee Croshaw
+    <atom:link href="#{request.url}" rel="self" type="application/rss+xml" />
+    - @videos.each do |video|
+      %item
+        %title= video.title
+        %link= video_url(video)
+        %guid= video.guid
+        %pubDate= Time.parse(video.pubdate).rfc822

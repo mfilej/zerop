@@ -18,6 +18,11 @@ end
 
 Video.database = $mongo_connection.db(db)
 
+helpers do
+  def video_url(video)
+    url(%{/e/#{video._id}})
+  end
+end
 
 get "/" do
   update_index
@@ -39,6 +44,11 @@ get "/e/:id/v" do |id|
   url = Video.find(id).url
   video = Video.new(url)
   redirect to(video.video_url)
+end
+
+get "/feed.rss" do
+  @videos = Video.all.reverse
+  haml :feed, format: :xhtml
 end
 
 def update_index
