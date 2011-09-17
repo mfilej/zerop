@@ -1,0 +1,7 @@
+%li
+  - if detailed
+    %img{ src: episode.thumb_url, alt: "episode thumbnail" }
+  %time
+    = episode.date
+  %a{ href: episode.url }
+    = episode.title

@@ -1,19 +1,15 @@
-require "zero"
+require "bundler"
+Bundler.setup :default, :test
 
-def fixture_url(file)
+require "zero"
+Zero.db = "zerop_test"
+
+RSpec.configure do |config|
+  config.treat_symbols_as_metadata_keys_with_true_values = true
+
+  config.after(:each, :db) { Episode.collection.remove }
+end
+
+def file_stub(file)
   "#{ File.expand_path "..", __FILE__ }/fixtures/#{ file }"
 end
-
-def video_fixture_url
-  fixture_url "video.html"
-end
-
-def quasi_json_fixture_url
-  fixture_url "config.qjson"
-end
-
-def feed_fixture_url
-  fixture_url "feed.xml"
-end
-
-

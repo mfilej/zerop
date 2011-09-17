@@ -1,8 +1,22 @@
-%h1 Zero Punctiation
+!!!
+%head
+  %title Zero Punctuation
+  %meta(charset="utf-8")
+  %link(rel="stylesheet" href="style.css")
 
-%ol#episode-list
-  - @videos.each do |video|
-    %li
-      %a{ href: url(%{/e/#{video._id}})}
-        = video.title
+%h1 Zero Punctuation
+
+#episode-list
+
+  %h2 Latest
+
+  %ol
+    - latest_episodes.each do |episode|
+      = render_episode(episode, :detailed)
+
+  - episodes_by_year.each do |year, episodes|
+    %h2= year
+    %ol
+      - episodes.each do |episode|
+        = render_episode(episode)
 
