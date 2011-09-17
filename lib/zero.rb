@@ -20,7 +20,7 @@ module Zero
       # stolen from Mingo
       if db.index('mongodb://') == 0
         @db_connection = Mongo::Connection.from_uri(db)
-        connection.db(connection.auths.last['db_name'])
+        @db_connection.db(@db_connection.auths.last['db_name'])
       else
         @db_connection = Mongo::Connection.new.db(db)
       end
