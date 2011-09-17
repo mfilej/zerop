@@ -8,6 +8,8 @@ autoload :Episode, "episode"
 module Zero
   autoload :App, "zero/app"
   autoload :EpisodePresenter, "zero/episode_presenter"
+  autoload :EpisodePartial,   "zero/episode_partial"
+  autoload :EpisodesHelper,   "zero/episodes_helper"
 
   class << self
     attr_accessor :db

@@ -4,9 +4,9 @@
     %link http://zerop.heroku.com
     %description Zero Punctuation episodes by Ben Yahtzee Croshaw
     <atom:link href="#{request.url}" rel="self" type="application/rss+xml" />
-    - @videos.each do |video|
+    - episodes.each do |episode|
       %item
-        %title= video.title
-        %link= video_url(video)
-        %guid= video.guid
-        %pubDate= Time.parse(video.pubdate).rfc822
+        %title= episode.title
+        %link http://zerop.heroku.com/v/#{episode.id}
+        %guid /v/#{episode.id}
+        %pubDate= episode.time.rfc822

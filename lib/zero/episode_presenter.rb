@@ -13,8 +13,16 @@ module Zero
       @episode["title"]
     end
 
+    def time
+      @episode["pubdate"]
+    end
+
     def date
-      @episode["pubdate"].strftime "%b %-d"
+      time.strftime "%b %-d"
+    end
+
+    def year
+      time.year
     end
 
     def url
@@ -23,10 +31,6 @@ module Zero
 
     def thumb_url
       @episode["thumb_url"]
-    end
-
-    def year
-      @episode["pubdate"].year
     end
 
   end

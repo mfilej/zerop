@@ -11,6 +11,7 @@ module Zero
 
     its(:id) { should eq(1) }
     its(:title) { should eq("Episode") }
+    its(:time) { should eq(Time.mktime 2011, 3, 9) }
     its(:date) { should eq("Mar 9") }
     its(:url) { should eq("/e/1") }
     its(:thumb_url) { "http://cdn.ex/th.jpg" }
