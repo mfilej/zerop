@@ -19,7 +19,7 @@ module Parsed
         pubdate: Time.parse(video.pubdate),
         video_url: video.url,
         page_url: video.link,
-        thumb_url: nil
+        thumb_url: video.thumb
       }
     end
   end

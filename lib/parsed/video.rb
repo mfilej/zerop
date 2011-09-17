@@ -51,16 +51,12 @@ module Parsed
         JSON.parse open(config_url).read.tr!("'", '"')
       end
 
-      def urls
-        config["playlist"].map { |p| p["url"] }
-      end
-
       def video
-        urls.find { |u| u =~ /mp4$/ }
+        config["playlist"].find { |p| p["url"] =~ /mp4$/ }["url"]
       end
 
       def thumb
-        urls.find { |u| u =~ /jpg$/ }
+        @page.at(%{link[rel="image_src"]})["href"]
       end
     end
 

@@ -9,7 +9,8 @@ describe Parsed do
 
       Episode[3].should be_nil
 
-      Parsed::Video.any_instance.stub(:url) { :noop }
+      Parsed::Video.any_instance.stub(:url) { "http://video" }
+      Parsed::Video.any_instance.stub(:thumb) { "http://thumb" }
 
       Parsed.update_index(<<-XML)
         <rss>
@@ -40,10 +41,15 @@ describe Parsed do
       Episode[3]["title"].should eq("Ep3")
       Episode[3]["pubdate"].day.should eq(13)
       Episode[3]["page_url"].should eq("http://cdn/v/3")
+      Episode[3]["video_url"].should eq("http://video")
+      Episode[3]["thumb_url"].should eq("http://thumb")
 
       Episode[4]["title"].should eq("Ep4")
       Episode[4]["pubdate"].day.should eq(14)
       Episode[4]["page_url"].should eq("http://cdn/v/4")
+      Episode[4]["video_url"].should eq("http://video")
+      Episode[4]["thumb_url"].should eq("http://thumb")
+
     end
   end
 
