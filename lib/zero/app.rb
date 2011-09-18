@@ -3,6 +3,7 @@ require "sinatra/base"
 module Zero
   class App < Sinatra::Base
 
+    set :public, "public"
     helpers EpisodesHelper, EpisodePartial
 
     get "/" do
