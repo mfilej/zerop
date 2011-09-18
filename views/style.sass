@@ -1,5 +1,118 @@
+$line-height: 54px
+$base-text-color: #1D1A1A
+$light-text-color: #444
+html
+  background: #222
+
 body
-  font-family: helvetica, sans-serif
+  font:
+    family: helvetica, sans-serif
+    size: 16px
+  background: #F8F8F9
+  min-width: 500px
+  max-width: 660px
+  padding: 0
+  margin: 0 auto
+  color: $base-text-color
+  background: #c5cbd3
 
 h1
-  font-family: AmericanTypewriter-Bold, serif
+  margin: 0
+  padding-left: 20px
+  line-height: $line-height
+  font:
+    family: "AmericanTypewriter", "Helvetica"
+    weight: bold
+  text:
+    shadow: #2D3642 0 -1px 0
+    align: center
+  font-size: 20px
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#727372), to(#282928))
+  color: white
+
+h2
+  line-height: $line-height/2 - 2px
+  padding:
+    left: 20px
+    top: 2px
+  margin: 0
+  color: #fff
+  text-shadow: #666 0 1px 0
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a5b0ba), color-stop(2%, #a2a6b1), color-stop(50%, #a5b0ba), to(#aaaeb8))
+  border:
+    top: 1px solid #717c85
+    bottom: 1px solid #989da4
+  -webkit-box-shadow: inset 1px 1px #a5b0ba
+  font-size: 16px
+
+ol
+  list-style: none
+  padding: 0
+  margin: 0
+
+li
+  line-height: $line-height
+  margin-bottom: 0px
+
+  a
+    text-decoration: none
+    &, &:visited
+      color: #000
+    &:hover
+      color: #E33414
+
+.latest
+  li
+    position: relative
+    height: 105px
+    background: #eee
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#edeeed), color-stop(2%, #d8d9d8), color-stop(50%, #c9cac9), to(#b8b9b8))
+    border-bottom: 1px solid #9b9da5
+    &:last-child
+      border-bottom: none
+    a
+      top: 20px
+      font-size: 20px
+    time
+      text-align: left
+      top: 40px
+      color: $light-text-color
+    img
+      width: 140px
+      height: 105px
+      top: 0
+      right: 0
+    time, a
+      display: block
+      left: 20px
+      font-weight: bold
+    img, time, a
+      position: absolute
+
+.archive
+  ol
+    background: #fff
+  ol, li
+    border-bottom: 1px solid #b3b4b3
+  li
+    padding-left: 20px
+    &:last-child
+      border-bottom: none
+    a
+      font-weight: bold
+  time
+    color: #369
+    width: 100px
+    padding-right: 20px
+    float: right
+    text-align: right
+
+.note
+  padding: 5*27px 0 60px
+  p
+    margin: 0 auto
+    width: 60%
+    color: #4C566C
+    text:
+      shadow: white 0 1px 0
+      align: center

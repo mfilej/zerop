@@ -8,15 +8,24 @@
 
 #episode-list
 
-  %h2 Latest
+  %section.latest
+    %h2 Latest
 
-  %ol
-    - latest_episodes.each do |episode|
-      = render_episode(episode, :detailed)
-
-  - episodes_by_year.each do |year, episodes|
-    %h2= year
     %ol
-      - episodes.each do |episode|
-        = render_episode(episode)
+      - latest_episodes.each do |episode|
+        = render_episode(episode, :detailed)
 
+  %section.archive
+
+    - episodes_by_year.each do |year, episodes|
+      %h2= year
+      %ol
+        - episodes.each do |episode|
+          = render_episode(episode)
+
+  %aside.note
+    %p
+      This site is in no way associated with the Escapist magazine nor does it
+      host any of the linked videos.
+
+%script(src="script.js")
