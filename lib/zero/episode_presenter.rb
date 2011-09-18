@@ -25,8 +25,12 @@ module Zero
       time.year
     end
 
+    def path
+      "/v/#{id}"
+    end
+
     def url
-      "/e/#{id}"
+      "http://zerop.heroku.com#{path}"
     end
 
     def thumb_url

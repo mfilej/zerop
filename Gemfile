@@ -2,6 +2,7 @@ source :rubygems
 
 gem "sinatra"
 gem "haml"
+gem "builder"
 gem "sass"
 gem "bson_ext"
 gem "mongo"

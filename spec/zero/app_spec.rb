@@ -1,62 +1,75 @@
 require "spec_helper"
+require "capybara/rspec"
 require "rack/test"
 
-module Zero
-  describe App do
-    include Rack::Test::Methods
-    let(:app) { described_class }
+Capybara.app = Zero::App
 
-    describe "/" do
-      it "responds with success" do
-        #get "/"
-        #last_response.should be_ok
-      end
+feature "Episode index", :db do
+  background do
+    Episode[1] = { title: "Review", video_url: "http://video.mp4",
+                   pubdate: Time.utc(2011, 5, 1) }
+    Episode[2] = { title: "Other Review", video_url: "http://vid.mp4",
+                   pubdate: Time.utc(2011, 4, 24) }
+  end
+
+  scenario "Redirecting to the video" do
+    visit "/"
+    click_link "Review"
+
+    page.current_url.should eq("http://video.mp4/")
+  end
+
+  scenario "Invalid episode id" do
+    visit "/v/42"
+
+    page.status_code.should eq(404)
+  end
+end
+
+# need to switch to rack-test since capybara treats the feed as html4
+describe Zero::App, :db do
+  include Rack::Test::Methods
+  let(:app) { described_class }
+
+  describe "atom feed" do
+    before do
+      Episode[1] = { title: "Ep1", video_url: "http://video/1", pubdate: Time.utc(2011, 3, 10) }
+      Episode[2] = { title: "Ep2", video_url: "http://video/2", pubdate: Time.utc(2011, 4, 10) }
     end
 
-    describe "/v/:id" do
-      it "redirects to the episode url", :db do
-        Episode[14] = { video_url: "http://example.cdn/v.mp4" }
-        get "/v/14"
-
-        last_response.status.should eq(301)
-        follow_redirect!
-        last_request.url.should eq("http://example.cdn/v.mp4")
-      end
-
-      it "responds with not found" do
-        get "/v/42"
-        last_response.status.should eq(404)
-      end
+    before do
+      get "/feed.xml"
     end
 
-    describe "/feed.xml", :db do
-      let(:feed) { Nokogiri::XML(last_response.body) }
+    let(:feed) { Nokogiri::XML last_response.body }
 
-      it "renders the atom feed" do
-        Episode[1] = { title: "Ep1", video_url: "http://video/1", pubdate: Time.utc(2011, 3, 10) }
-        Episode[2] = { title: "Ep2", video_url: "http://video/2", pubdate: Time.utc(2011, 4, 10) }
-        Episode[3] = { title: "Ep3", video_url: "http://video/3", pubdate: Time.utc(2011, 5, 10) }
+    it "responds with success" do
+      last_response.should be_ok
+    end
 
-        get "/feed.xml"
+    it "responds with the proper content type" do
+      last_response.content_type.should eq("application/atom+xml")
+    end
 
-        last_response.should be_ok
+    it "renders the channel tags" do
+      feed.at_xpath("rss/channel/title").content.should eq("Zero Punctuation")
+      feed.at_xpath("rss/channel/link").content.should eq("http://zerop.heroku.com")
+    end
 
-        items = feed.search("item")
-        items[0].at("title").content.should eq("Ep3")
-        items[0].at("link").content.should eq("http://zerop.heroku.com/v/3")
-        items[0].at("guid").content.should eq("/v/3")
-        items[0].at("pubDate").content.should eq("Tue, 10 May 2011 00:00:00 -0000")
+    it "renders the first item" do
+      item = feed.at_xpath("rss/channel/item[1]")
+      item.at_xpath("title").content.should eq("Ep2")
+      item.at_xpath("pubDate").content.should eq("Sun, 10 Apr 2011 00:00:00 -0000")
+      item.at_xpath("link").content.should eq("http://zerop.heroku.com/v/2")
+      item.at_xpath("guid").content.should eq("http://zerop.heroku.com/v/2")
+    end
 
-        items[1].at("title").content.should eq("Ep2")
-        items[1].at("link").content.should eq("http://zerop.heroku.com/v/2")
-        items[1].at("guid").content.should eq("/v/2")
-        items[1].at("pubDate").content.should eq("Sun, 10 Apr 2011 00:00:00 -0000")
-
-        items[2].at("title").content.should eq("Ep1")
-        items[2].at("link").content.should eq("http://zerop.heroku.com/v/1")
-        items[2].at("guid").content.should eq("/v/1")
-        items[2].at("pubDate").content.should eq("Thu, 10 Mar 2011 00:00:00 -0000")
-      end
+    it "renders the second item" do
+      item = feed.at_xpath("rss/channel/item[2]")
+      item.at_xpath("title").content.should eq("Ep1")
+      item.at_xpath("pubDate").content.should eq("Thu, 10 Mar 2011 00:00:00 -0000")
+      item.at_xpath("link").content.should eq("http://zerop.heroku.com/v/1")
+      item.at_xpath("guid").content.should eq("http://zerop.heroku.com/v/1")
     end
 
   end

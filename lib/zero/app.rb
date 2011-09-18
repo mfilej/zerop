@@ -17,8 +17,8 @@ module Zero
     end
 
     get "/feed.xml" do
-      content_type :rss
-      haml :feed, format: :xhtml
+      content_type "application/atom+xml"
+      builder :feed
     end
 
     get("/style.css") { sass :style }
