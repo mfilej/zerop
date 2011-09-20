@@ -1,6 +1,12 @@
+=overflow-ellipsis
+  white-space: nowrap
+  text-overflow: ellipsis
+  overflow: hidden
+
 $line-height: 54px
 $base-text-color: #1D1A1A
 $light-text-color: #444
+
 html
   background: #222
 
@@ -50,13 +56,19 @@ ol
   margin: 0
 
 li
+  position: relative
   line-height: $line-height
+  height: $line-height
   margin-bottom: 0px
 
   a
-    text:
-      decoration: none
-      overflow: ellipsis
+    position: absolute
+    top: 0
+    left: 0
+    text-indent: 20px
+    text-decoration: none
+    +overflow-ellipsis
+
     &, &:visited
       color: #000
     &:hover
@@ -64,7 +76,6 @@ li
 
 .latest
   li
-    position: relative
     height: 105px
     background: #eee
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#edeeed), color-stop(2%, #d8d9d8), color-stop(50%, #c9cac9), to(#b8b9b8))
@@ -72,11 +83,16 @@ li
     &:last-child
       border-bottom: none
     a
-      top: 20px
+      padding:
+        top: 20px
+        right: 30%
+      width: 70%
+      height: 85px
       font-size: 20px
     time
       text-align: left
       top: 40px
+      left: 20px
       color: $light-text-color
     img
       width: 140px
@@ -85,7 +101,6 @@ li
       right: 0
     time, a
       display: block
-      left: 20px
       font-weight: bold
     img, time, a
       position: absolute
@@ -101,6 +116,7 @@ li
       border-bottom: none
     a
       font-weight: bold
+      width: 80%
   time
     color: #369
     width: 100px
