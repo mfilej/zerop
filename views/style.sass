@@ -4,6 +4,8 @@
   overflow: hidden
 
 $line-height: 43px
+$image-width: 140px
+$image-height: 105px
 $base-text-color: #1D1A1A
 $light-text-color: #444
 
@@ -75,19 +77,21 @@ li
       color: #E33414
 
 .latest
+  background: #9b9da5
   li
-    height: 105px
+    height: $image-height
     background: #eee
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#edeeed), color-stop(2%, #d8d9d8), color-stop(50%, #c9cac9), to(#b8b9b8))
     border-bottom: 1px solid #9b9da5
+    margin-right: $image-width
     &:last-child
       border-bottom: none
     a
       padding:
         top: 24px
-        right: 35%
-      width: 65%
-      height: 105px - 25px
+        right: $image-width
+      width: 100%
+      height: $image-height - 25px
       font-size: 20px
     time
       text-align: left
@@ -95,10 +99,10 @@ li
       left: 0
       color: $light-text-color
     img
-      width: 140px
-      height: 105px
+      width: $image-width
+      height: $image-height
       top: 0
-      right: 0
+      right: -$image-width
     time, a
       display: block
       font-weight: bold
