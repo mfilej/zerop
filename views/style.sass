@@ -34,6 +34,7 @@ h1
     shadow: #2D3642 0 -1px 0
     align: center
   font-size: 20px
+  background-color: #333
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#727372), to(#282928))
   color: white
 
@@ -43,6 +44,7 @@ h2
   margin: 0
   color: #fff
   text-shadow: #666 0 1px 0
+  background-color: #a5aab4
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#a5b0ba), color-stop(2%, #a2a6b1), color-stop(50%, #a5b0ba), to(#aaaeb8))
   border:
     top: 1px solid #717c85
@@ -81,10 +83,11 @@ li
   background: #9b9da5
   li
     height: $image-height
-    background: #eee
+    background-color: #9b9da5
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#edeeed), color-stop(2%, #d8d9d8), color-stop(50%, #c9cac9), to(#b8b9b8))
     border-bottom: 1px solid #9b9da5
     margin-right: $image-width
+
     &:last-child
       border-bottom: none
     a
@@ -132,11 +135,12 @@ li
     text-align: right
 
 .note
-  padding: 5*27px 0 60px
+  padding: 3*$line-height 0 60px
   p
-    margin: 0 auto
+    margin: 0 auto $line-height
     width: 60%
-    color: #4C566C
     text:
       shadow: white 0 1px 0
       align: center
+  a, p
+    color: #4C566C
