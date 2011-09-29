@@ -1,7 +1,7 @@
 namespace :episodes do
   $LOAD_PATH << File.expand_path("../lib", __FILE__)
   require "zero"
-  Zero.db = "zerop_development"
+  Zero.db = ENV["MONGOHQ_URL"] || "zerop_development"
 
   desc "Clears and reuilds the episodes index from given file"
   task :build do
