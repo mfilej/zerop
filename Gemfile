@@ -13,3 +13,7 @@ group :test do
   gem "rack-test"
   gem "capybara"
 end
+
+group :updater do
+  gem "whenever"
+end
