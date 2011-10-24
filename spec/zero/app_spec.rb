@@ -3,6 +3,8 @@ require "capybara/rspec"
 require "rack/test"
 
 Capybara.app = Zero::App
+def app() Capybara.app end
+include Rack::Test::Methods
 
 feature "Episode index", :db do
   background do
@@ -26,51 +28,60 @@ feature "Episode index", :db do
   end
 end
 
+feature "Update episode index", :db do
+  background do
+    ENV["episodes_update_token"] = "foobarbaz"
+  end
+
+  scenario "Requesting an update with an invalid token" do
+    post "/update?token=wrong"
+
+    last_response.status.should eq(403)
+    last_response.body.should include("Invalid token")
+  end
+
+  scenario "Requesting an update with a valid token" do
+    Parsed.should_receive :update_index
+
+    post "/update?token=foobarbaz"
+
+    last_response.status.should eq(200)
+  end
+
+end
+
 # need to switch to rack-test since capybara treats the feed as html4
-describe Zero::App, :db do
-  include Rack::Test::Methods
-  let(:app) { described_class }
+feature "Atom feed" do
 
-  describe "atom feed" do
-    before do
-      Episode[1] = { title: "Ep1", video_url: "http://video/1", pubdate: Time.utc(2011, 3, 10) }
-      Episode[2] = { title: "Ep2", video_url: "http://video/2", pubdate: Time.utc(2011, 4, 10) }
-    end
+  background do
+    Episode[1] = { title: "Ep1", video_url: "http://video/1", pubdate: Time.utc(2011, 3, 10) }
+    Episode[2] = { title: "Ep2", video_url: "http://video/2", pubdate: Time.utc(2011, 4, 10) }
+  end
 
-    before do
-      get "/feed.xml"
-    end
+  scenario "Render the feed" do
 
-    let(:feed) { Nokogiri::XML last_response.body }
+    get "/feed.xml"
 
-    it "responds with success" do
-      last_response.should be_ok
-    end
+    feed = Nokogiri::XML last_response.body
 
-    it "responds with the proper content type" do
-      last_response.content_type.should eq("application/atom+xml")
-    end
+    last_response.should be_ok
+    last_response.content_type.should eq("application/atom+xml")
 
-    it "renders the channel tags" do
-      feed.at_xpath("rss/channel/title").content.should eq("Zero Punctuation")
-      feed.at_xpath("rss/channel/link").content.should eq("http://zerop.heroku.com")
-    end
+    feed.at_xpath("rss/channel/title").content.should eq("Zero Punctuation")
+    feed.at_xpath("rss/channel/link").content.should eq("http://zerop.heroku.com")
 
-    it "renders the first item" do
-      item = feed.at_xpath("rss/channel/item[1]")
-      item.at_xpath("title").content.should eq("Ep2")
-      item.at_xpath("pubDate").content.should eq("Sun, 10 Apr 2011 00:00:00 -0000")
-      item.at_xpath("link").content.should eq("http://zerop.heroku.com/v/2")
-      item.at_xpath("guid").content.should eq("http://zerop.heroku.com/v/2")
-    end
+    item = feed.at_xpath("rss/channel/item[1]")
+    item.at_xpath("title").content.should eq("Ep2")
+    item.at_xpath("pubDate").content.should eq("Sun, 10 Apr 2011 00:00:00 -0000")
+    item.at_xpath("link").content.should eq("http://zerop.heroku.com/v/2")
+    item.at_xpath("guid").content.should eq("http://zerop.heroku.com/v/2")
 
-    it "renders the second item" do
-      item = feed.at_xpath("rss/channel/item[2]")
-      item.at_xpath("title").content.should eq("Ep1")
-      item.at_xpath("pubDate").content.should eq("Thu, 10 Mar 2011 00:00:00 -0000")
-      item.at_xpath("link").content.should eq("http://zerop.heroku.com/v/1")
-      item.at_xpath("guid").content.should eq("http://zerop.heroku.com/v/1")
-    end
+    item = feed.at_xpath("rss/channel/item[2]")
+    item.at_xpath("title").content.should eq("Ep1")
+    item.at_xpath("pubDate").content.should eq("Thu, 10 Mar 2011 00:00:00 -0000")
+    item.at_xpath("link").content.should eq("http://zerop.heroku.com/v/1")
+    item.at_xpath("guid").content.should eq("http://zerop.heroku.com/v/1")
 
   end
+
 end

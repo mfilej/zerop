@@ -13,6 +13,10 @@ module Zero
       episodes.drop(3).group_by &:year
     end
 
+    def update_episodes
+      Parsed.update_index(open Parsed::FEED_URL)
+    end
+
   end
 end
 
